@@ -1,0 +1,53 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshBite | Food Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Using BoxIcons for the cart icon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <h1 class="logo">Fresh<span>Bite</span></h1>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class='bx bx-shopping-bag'></i>
+                <span id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Delicious Food, Delivered Fast.</h2>
+            <p>Order from the best local restaurants in Ahmedabad.</p>
+        </section>
+
+        <!-- Menu Section -->
+        <div id="food-grid" class="food-grid">
+            <!-- JavaScript will inject items here -->
+        </div>
+    </main>
+
+    <!-- Sidebar Cart -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Order</h3>
+            <i class='bx bx-x' onclick="toggleCart()"></i>
+        </div>
+        <div id="cart-items" class="cart-items-list">
+            <!-- Cart items will appear here -->
+        </div>
+        <div class="cart-footer">
+            <div class="total">Total: ₹<span id="cart-total">0</span></div>
+            <button class="checkout-btn" onclick="checkout()">Checkout Now</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
