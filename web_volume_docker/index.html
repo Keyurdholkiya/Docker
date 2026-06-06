@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; }
+        h2 { margin-top: 0; color: #333; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #218838; }
+        .user-list { margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+        .user-item { background: #f8f9fa; padding: 8px; margin: 5px 0; border-radius: 4px; font-size: 14px; border-left: 4px solid #28a745; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Register User</h2>
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Enter Name" required>
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <button type="submit">Save User Data</button>
+    </form>
+
+    <div class="user-list">
+        <h3>Registered Users:</h3>
+        <div id="usersContainer"></div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:3000';
+
+    // 1. Page load hote hi purana data fetch karo
+    async function loadUsers() {
+        try {
+            const res = await fetch(`${API_URL}/users`);
+            const users = await res.json();
+            const container = document.getElementById('usersContainer');
+            container.innerHTML = '';
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.className = 'user-item';
+                div.innerHTML = `<strong>${user.name}</strong> (${user.email})`;
+                container.appendChild(div);
+            });
+        } catch (err) { console.error("Error loading users:", err); }
+    }
+
+    // 2. Form submit hone par data post karo
+    document.getElementById('userForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+
+        try {
+            await fetch(`${API_URL}/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email })
+            });
+            document.getElementById('userForm').reset();
+            loadUsers(); // List refresh karo
+        } catch (err) { console.error("Error saving user:", err); }
+    });
+
+    loadUsers();
+</script>
+</body>
+</html>

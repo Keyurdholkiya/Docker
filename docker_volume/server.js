@@ -2,11 +2,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// 💾 Data is directory me store hoga (Volume yahan map hogi)
 const DATA_DIR = '/app/data';
 const FILE_PATH = path.join(DATA_DIR, 'orders.json');
 
-// Pakka karo ki directory exist karti hai
 if (!fs.existsSync(DATA_DIR)){
     fs.mkdirSync(DATA_DIR, { recursive: true });
 }
@@ -14,7 +12,7 @@ if (!fs.existsSync(DATA_DIR)){
 const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'application/json');
 
-    // 1. GET Route: Purane saare orders dekhne ke liye
+   
     if (req.url === '/orders' && req.method === 'GET') {
         if (fs.existsSync(FILE_PATH)) {
             const data = fs.readFileSync(FILE_PATH, 'utf8');
